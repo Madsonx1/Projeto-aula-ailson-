@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Livros</h2>
+
+<a href="{{ url_for('novoLivro') }}" class="btn btn-primary">
+    <i class="bi bi-plus-circle"></i> Novo livro
+</a>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+<tr>
+    <th scope="row">{{ livro.id }}</th>
+    <td>{{ livro.nome }}</td>
+    <td>{{ livro.descricao }}</td>
+    <td>{{ livro.categoria }}</td>
+    <td>
+        <a href="{{ url_for('editarLivro', id=livro.id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+        <form action="{{ url_for('excluirLivro', id=livro.id) }}" method="POST" style="display:inline;"
+            onsubmit="return confirm('Deseja excluir este livro?')">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Editar Livro</h2>
+    <form method="POST" enctype="multipart/form-data" class="row g-3">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- Nome do Livro -->
+        <div class="col-md-6">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" value="{{ livro.nome }}" class="form-control" name="nome" id="nome" required>
+        </div>
+
+        <!-- Descrição -->
+        <div class="col-12">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" name="descricao" id="descricao" rows="4" required>{{ livro.descricao }}</textarea>
+        </div>
+
+        <!-- Categoria -->
+        <div class="col-md-6">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select class="form-select" name="categoria" id="categoria" required>
+                <option value="">Selecione</option>
+                <option value="ficcao" {% if livro.categoria == 'ficcao' %}selected{% endif %}>Ficção</option>
+                <option value="nao_ficcao" {% if livro.categoria == 'nao_ficcao' %}selected{% endif %}>Não Ficção</option>
+                <option value="romance" {% if livro.categoria == 'romance' %}selected{% endif %}>Romance</option>
+                <option value="aventura" {% if livro.categoria == 'aventura' %}selected{% endif %}>Aventura</option>
+                <option value="biografia" {% if livro.categoria == 'biografia' %}selected{% endif %}>Biografia</option>
+            </select>
+        </div>
+
+        <!-- Imagem -->
+        <div class="col-md-6">
+            <label for="imagem" class="form-label">Imagem da Capa</label>
+            <input type="file" class="form-control" name="imagem" id="imagem" accept="image/*">
+            {% if livro.imagem %}
+                <div class="mt-2">
+                    <img src="{{ url_for('static', filename='uploads/' + livro.imagem) }}" alt="Imagem atual" class="img-thumbnail" style="max-width: 150px;">
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Botão Salvar -->
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

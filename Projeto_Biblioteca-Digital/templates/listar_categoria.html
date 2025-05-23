@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h2>Categorias</h2>
+
+<a href="{{ url_for('novacategoria')}}" class="btn btn-primary">
+    <i class="bi bi-plus-circle"></i> Nova categoria
+</a>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in categoria %}
+
+        <tr>
+            <th scope="row">{{ i.id }}</th>
+            <td>{{ i.nome }}</td>
+            <td>
+                <a href="{{url_for('editarCategoria', id=i['id'])}}" class="btn btn-sm btn-warning"> Editar </a>
+
+                <form action="{{ url_for('excluirCategoria', id=i['id'])}}" method="POST" style="display:inline;"
+                    onsubmit="return confirm('Deseja excluir esta despesa?')">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

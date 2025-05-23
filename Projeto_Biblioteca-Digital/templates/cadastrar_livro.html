@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Cadastrar Livro</h2>
+
+<form method="POST" enctype="multipart/form-data" class="row g-3">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <!-- Nome -->
+    <div class="col-md-6">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" name="nome" id="nome" required>
+    </div>
+
+    <!-- Descrição -->
+    <div class="col-12">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea class="form-control" name="descricao" id="descricao" rows="4" required></textarea>
+    </div>
+
+    <!-- Categoria -->
+    <div class="col-md-6">
+        <label for="categoria" class="form-label">Categoria</label>
+        <select class="form-select" name="categoria" id="categoria" required>
+            <option value="">Selecione</option>
+            <option value="ficcao">Ficção</option>
+            <option value="nao_ficcao">Não Ficção</option>
+            <option value="romance">Romance</option>
+            <option value="aventura">Aventura</option>
+            <option value="biografia">Biografia</option>
+            <!-- Adicione mais opções se necessário -->
+        </select>
+    </div>
+
+    <!-- Imagem da Capa -->
+    <div class="col-md-6">
+        <label for="imagem" class="form-label">Imagem da Capa</label>
+        <input type="file" class="form-control" name="imagem" id="imagem" accept="image/*">
+    </div>
+
+    <!-- Botão -->
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+
+</form>
+
+{% endblock %}
